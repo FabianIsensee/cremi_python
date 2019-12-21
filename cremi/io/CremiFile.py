@@ -1,7 +1,9 @@
 import h5py
 import numpy as np
-from .. import Annotations
-from .. import Volume
+from past.types import unicode
+
+from cremi import Volume, Annotations
+
 
 class CremiFile(object):
 
@@ -37,7 +39,7 @@ class CremiFile(object):
 
             ds = self.h5file[path]
             if ds.dtype == dtype and ds.shape == np.array(data).shape:
-                print "overwriting existing dataset"
+                print("overwriting existing dataset")
                 self.h5file[path][:] = data[:]
                 return
 

@@ -1,11 +1,13 @@
 import numpy as np
-from border_mask import create_border_mask
-from voi import voi
-from rand import adapted_rand
+
+from cremi.evaluation.border_mask import create_border_mask
+from cremi.evaluation.rand import adapted_rand
+from cremi.evaluation.voi import voi
+
 
 class NeuronIds:
 
-    def __init__(self, groundtruth, border_threshold = None):
+    def __init__(self, groundtruth, border_threshold=None):
         """Create a new evaluation object for neuron ids against the provided ground truth.
 
         Parameters
@@ -29,13 +31,13 @@ class NeuronIds:
 
         if self.border_threshold:
 
-            print "Computing border mask..."
+            print("Computing border mask...")
 
             self.gt = np.zeros(groundtruth.data.shape, dtype=np.uint64)
             create_border_mask(
                 groundtruth.data,
                 self.gt,
-                float(border_threshold)/groundtruth.resolution[1],
+                float(border_threshold) / groundtruth.resolution[1],
                 np.uint64(-1))
         else:
             self.gt = np.array(self.groundtruth.data).copy()
@@ -49,15 +51,15 @@ class NeuronIds:
         assert list(segmentation.data.shape) == list(self.groundtruth.data.shape)
         assert list(segmentation.resolution) == list(self.groundtruth.resolution)
 
-        print "Computing VOI..."
+        print("Computing VOI...")
 
-        return voi(np.array(segmentation.data), self.gt, ignore_groundtruth = [0])
+        return voi(np.array(segmentation.data), self.gt, ignore_groundtruth=[0])
 
     def adapted_rand(self, segmentation):
 
         assert list(segmentation.data.shape) == list(self.groundtruth.data.shape)
         assert list(segmentation.resolution) == list(self.groundtruth.resolution)
 
-        print "Computing RAND..."
+        print("Computing RAND...")
 
         return adapted_rand(np.array(segmentation.data), self.gt)

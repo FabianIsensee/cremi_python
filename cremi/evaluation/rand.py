@@ -3,6 +3,7 @@
 import numpy as np
 import scipy.sparse as sparse
 
+
 # Evaluation code courtesy of Juan Nunez-Iglesias, taken from
 # https://github.com/janelia-flyem/gala/blob/master/gala/evaluate.py
 
@@ -48,9 +49,9 @@ def adapted_rand(seg, gt, all_stats=False):
 
     p_ij = sparse.csr_matrix((ones_data, (segA[:], segB[:])), shape=(n_labels_A, n_labels_B))
 
-    a = p_ij[1:n_labels_A,:]
-    b = p_ij[1:n_labels_A,1:n_labels_B]
-    c = p_ij[1:n_labels_A,0].todense()
+    a = p_ij[1:n_labels_A, :]
+    b = p_ij[1:n_labels_A, 1:n_labels_B]
+    c = p_ij[1:n_labels_A, 0].todense()
     d = b.multiply(b)
 
     a_i = np.array(a.sum(1))
@@ -67,6 +68,6 @@ def adapted_rand(seg, gt, all_stats=False):
     are = 1.0 - fScore
 
     if all_stats:
-        return (are, precision, recall)
+        return are, precision, recall
     else:
         return are

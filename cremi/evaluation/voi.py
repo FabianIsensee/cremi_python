@@ -6,6 +6,7 @@
 import numpy as np
 import scipy.sparse as sparse
 
+
 def voi(reconstruction, groundtruth, ignore_reconstruction=[], ignore_groundtruth=[0]):
     """Return the conditional entropies of the variation of information metric. [1]
 
@@ -41,6 +42,7 @@ def voi(reconstruction, groundtruth, ignore_reconstruction=[], ignore_groundtrut
     (hyxg, hxgy) = split_vi(reconstruction, groundtruth, ignore_reconstruction, ignore_groundtruth)
     return (hxgy, hyxg)
 
+
 def split_vi(x, y=None, ignore_x=[0], ignore_y=[0]):
     """Return the symmetric conditional entropies associated with the VI.
 
@@ -73,9 +75,10 @@ def split_vi(x, y=None, ignore_x=[0], ignore_y=[0]):
     --------
     vi
     """
-    _, _, _ , hxgy, hygx, _, _ = vi_tables(x, y, ignore_x, ignore_y)
+    _, _, _, hxgy, hygx, _, _ = vi_tables(x, y, ignore_x, ignore_y)
     # false merges, false splits
     return np.array([hygx.sum(), hxgy.sum()])
+
 
 def vi_tables(x, y=None, ignore_x=[0], ignore_y=[0]):
     """Return probability tables used for calculating VI.
@@ -122,14 +125,15 @@ def vi_tables(x, y=None, ignore_x=[0], ignore_y=[0]):
     # Calculate log conditional probabilities and entropies
     lpygx = np.zeros(np.shape(px))
     lpygx[nzx] = xlogx(divide_rows(nzpxy, nzpx)).sum(axis=1).ravel()
-                        # \sum_x{p_{y|x} \log{p_{y|x}}}
-    hygx = -(px*lpygx) # \sum_x{p_x H(Y|X=x)} = H(Y|X)
+    # \sum_x{p_{y|x} \log{p_{y|x}}}
+    hygx = -(px * lpygx)  # \sum_x{p_x H(Y|X=x)} = H(Y|X)
 
     lpxgy = np.zeros(np.shape(py))
     lpxgy[nzy] = xlogx(divide_columns(nzpxy, nzpy)).sum(axis=0).ravel()
-    hxgy = -(py*lpxgy)
+    hxgy = -(py * lpxgy)
 
     return [pxy] + list(map(np.asarray, [px, py, hxgy, hygx, lpygx, lpxgy]))
+
 
 def contingency_table(seg, gt, ignore_seg=[0], ignore_gt=[0], norm=True):
     """Return the contingency table for all regions in matched segmentations.
@@ -156,7 +160,7 @@ def contingency_table(seg, gt, ignore_seg=[0], ignore_gt=[0], norm=True):
         labeled `i` in `seg` and `j` in `gt`. (Or the proportion of such voxels
         if `norm=True`.)
     """
-    segr = seg.ravel() 
+    segr = seg.ravel()
     gtr = gt.ravel()
     ignored = np.zeros(segr.shape, np.bool)
     data = np.ones(len(gtr))
@@ -169,6 +173,7 @@ def contingency_table(seg, gt, ignore_seg=[0], ignore_gt=[0], norm=True):
     if norm:
         cont /= float(cont.sum())
     return cont
+
 
 def divide_columns(matrix, row, in_place=False):
     """Divide each column of `matrix` by the corresponding element in `row`.
@@ -208,6 +213,7 @@ def divide_columns(matrix, row, in_place=False):
         out /= row[np.newaxis, :]
     return out
 
+
 def divide_rows(matrix, column, in_place=False):
     """Divide each row of `matrix` by the corresponding element in `column`.
 
@@ -245,6 +251,7 @@ def divide_rows(matrix, column, in_place=False):
     else:
         out /= column[:, np.newaxis]
     return out
+
 
 def xlogx(x, out=None, in_place=False):
     """Compute x * log_2(x).

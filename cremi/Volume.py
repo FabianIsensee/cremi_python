@@ -1,7 +1,6 @@
-
 class Volume:
 
-    def __init__(self, data, resolution = (1.0, 1.0, 1.0), offset = (0.0, 0.0, 0.0), comment = ""):
+    def __init__(self, data, resolution=(1.0, 1.0, 1.0), offset=(0.0, 0.0, 0.0), comment=""):
         self.data = data
         self.resolution = resolution
         self.offset = offset
@@ -18,7 +17,7 @@ class Volume:
         To access the raw pixel values, use the `data` attribute.
         """
 
-        i = tuple([ round(location[d]/self.resolution[d]) for d in range(len(location)) ])
+        i = tuple([round(location[d] / self.resolution[d]) for d in range(len(location))])
 
         if min(i) >= 0:
             try:
@@ -39,7 +38,7 @@ class Volume:
         To access the raw pixel values, use the `data` attribute.
         """
 
-        i = tuple([ round(location[d]/self.resolution[d]) for d in range(len(location)) ])
+        i = tuple([round(location[d] / self.resolution[d]) for d in range(len(location))])
 
         if min(i) >= 0:
             try:

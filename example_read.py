@@ -9,10 +9,10 @@ import random
 file = CremiFile("example.hdf", "r")
 
 # Check the content of the datafile
-print "Has raw: " + str(file.has_raw())
-print "Has neuron ids: " + str(file.has_neuron_ids())
-print "Has clefts: " + str(file.has_clefts())
-print "Has annotations: " + str(file.has_annotations())
+print("Has raw: " + str(file.has_raw()))
+print("Has neuron ids: " + str(file.has_neuron_ids()))
+print("Has clefts: " + str(file.has_clefts()))
+print("Has annotations: " + str(file.has_annotations()))
 
 # Read everything there is.
 #
@@ -27,24 +27,24 @@ neuron_ids = file.read_neuron_ids()
 clefts = file.read_clefts()
 annotations = file.read_annotations()
 
-print "Read raw: " + str(raw) + \
-    ", resolution " + str(raw.resolution) + \
-    ", offset " + str(raw.offset) + \
-    ("" if raw.comment == None else ", comment \"" + raw.comment + "\"")
+print("Read raw: " + str(raw) + \
+      ", resolution " + str(raw.resolution) + \
+      ", offset " + str(raw.offset) + \
+      ("" if raw.comment == None else ", comment \"" + raw.comment + "\""))
 
-print "Read neuron_ids: " + str(neuron_ids) + \
-    ", resolution " + str(neuron_ids.resolution) + \
-    ", offset " + str(neuron_ids.offset) + \
-    ("" if neuron_ids.comment == None else ", comment \"" + neuron_ids.comment + "\"")
+print("Read neuron_ids: " + str(neuron_ids) + \
+      ", resolution " + str(neuron_ids.resolution) + \
+      ", offset " + str(neuron_ids.offset) + \
+      ("" if neuron_ids.comment == None else ", comment \"" + neuron_ids.comment + "\""))
 
-print "Read clefts: " + str(clefts) + \
-    ", resolution " + str(clefts.resolution) + \
-    ", offset " + str(clefts.offset) + \
-    ("" if clefts.comment == None else ", comment \"" + clefts.comment + "\"")
+print("Read clefts: " + str(clefts) + \
+      ", resolution " + str(clefts.resolution) + \
+      ", offset " + str(clefts.offset) + \
+      ("" if clefts.comment == None else ", comment \"" + clefts.comment + "\""))
 
-print "Read annotations:"
+print("Read annotations:")
 for (id, type, location) in zip(annotations.ids(), annotations.types(), annotations.locations()):
-    print str(id) + " of type " + type + " at " + str(np.array(location)+np.array(annotations.offset))
-print "Pre- and post-synaptic partners:"
+    print(str(id) + " of type " + type + " at " + str(np.array(location) + np.array(annotations.offset)))
+print("Pre- and post-synaptic partners:")
 for (pre, post) in annotations.pre_post_partners:
-    print str(pre) + " -> " + str(post)
+    print(str(pre) + " -> " + str(post))
